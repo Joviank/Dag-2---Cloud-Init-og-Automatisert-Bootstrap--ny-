@@ -11,7 +11,7 @@ services:
       - ConnectionStrings__Default=Host=db;Port=5432;Database=tasks;Username=postgres;Password=postgres
 
   db:
-    image: postgres:18
+    image: postgres:16
     environment:
       POSTGRES_DB: tasks
       POSTGRES_USER: postgres
@@ -20,7 +20,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
   pgadmin:
     image: dpage/pgadmin4
     ports:

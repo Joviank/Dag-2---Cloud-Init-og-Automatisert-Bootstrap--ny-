@@ -1,3 +1,5 @@
+#cloud-config
+
 packages:
   - git
   - docker.io
