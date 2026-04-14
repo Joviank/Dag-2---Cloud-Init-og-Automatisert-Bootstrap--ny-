@@ -12,23 +12,14 @@ builder.Services.AddHealthChecks();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//
-// NYTT: Database
-//
 var connectionString = builder.Configuration.GetConnectionString("Default")
                       ?? Environment.GetEnvironmentVariable("ConnectionStrings__Default");
 
 builder.Services.AddDbContext<TaskDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-//
-// NYTT: Repository
-//
 builder.Services.AddScoped<ITaskRepository, EfTaskRepository>();
 
-//
-// ENDRET: Service (ikke Singleton lenger)
-//
 builder.Services.AddScoped<TaskServiceClass>();
 
 var app = builder.Build();
@@ -40,7 +31,12 @@ app.MapControllers();
 
 app.MapHealthChecks("/health");
 
-// Viktig for Docker
 app.Urls.Add("http://0.0.0.0:80");
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
