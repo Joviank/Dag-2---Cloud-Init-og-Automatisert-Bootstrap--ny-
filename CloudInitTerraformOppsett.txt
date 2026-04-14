@@ -1,0 +1,20 @@
+1. Opprett mappe infrastructure og lag en main.tf fil
+
+2. Ha med required_providers og providers
+
+3. Lag en variables.tf fil
+
+4. Beskriv den serveren vi ønsker fra Hetzner i main.tf
+
+5. Lag .auto.tfvars fil, her lagrer vi verdien fra Hetzner som hcloud token og ssh key name
+
+6. Lag en cloud-init.yaml fil hvor vi har packages og beskriver hva som skal skje når 
+server starter.
+
+7. Terraform init
+terraform apply
+
+8. Sjekk ut ip-adressen
+
+Hvis cloud-init ikke kjører sjekk med:
+cloud-init status
